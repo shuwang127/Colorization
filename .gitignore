@@ -1,3 +1,5 @@
 
 .DS_Store
 ./landscape_images/*
+./idea/*
+./__pycache__/*
