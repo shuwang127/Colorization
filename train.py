@@ -3,9 +3,10 @@ import os
 from basic_model import Net
 from colorize_data import ColorizeData
 from torch.utils.data import Dataset, DataLoader
+import argparse
 
 BATCHSIZE = 100
-LEARNRATE = 0.0001
+LEARNRATE = 0.001
 MAXEPOCHS = 100
 
 class Trainer:
@@ -68,3 +69,24 @@ class Trainer:
         # Validation loop end
         # Determine your evaluation metrics on the validation dataset.
         return lo
+
+def ArgParser():
+    parser = argparse.ArgumentParser()
+    parser.add_argument('-b', metavar='BATCHSIZE', help='the batch size', type=int)
+    parser.add_argument('-lr', metavar='LEARNRATE', help='the learning rate', type=float)
+    parser.add_argument('-m', metavar='MAXEPOCHS', help='the maxepochs', type=int)
+    args = parser.parse_args()
+    global BATCHSIZE
+    global LEARNRATE
+    global MAXEPOCHS
+    if args.b: BATCHSIZE = args.b
+    if args.lr: LEARNRATE = args.lr
+    if args.m: MAXEPOCHS = args.m
+
+    return parser
+
+if __name__ == '__main__':
+    ArgParser()
+    print(f'b = {BATCHSIZE}, lr = {LEARNRATE}, max={MAXEPOCHS}')
+    ins = Trainer()
+    ins.train()
